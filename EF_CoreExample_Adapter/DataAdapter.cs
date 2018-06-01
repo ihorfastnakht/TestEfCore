@@ -1,42 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EF_CoreExample.Shared;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace EF_CoreExample_Adapter
 {
-    public class Class1
+    public class DataAdapter
     {
 
         public IEnumerable<BlogDto> GetBlogs()
         {
             using (var db = new BloggingContext())
             {
-                var blogs = (from x in db.Blogs
-                             select new
-                             {
-                                id = x.BlogId,
-                                posts = x.Posts,
-                                url = x.Url
-                             }).ToArray();
+                db.ChangeTracker.LazyLoadingEnabled = false;
+                db.ChangeTracker.QueryTrackingBehavior = Microsoft.EntityFrameworkCore.QueryTrackingBehavior.NoTracking;
+                db.ChangeTracker.AutoDetectChangesEnabled = false;
 
+                //var blogs = (from x in db.Blogs
+                //             select new
+                //             {
+                //                 id = x.BlogId,
+                //                 posts = x.Posts,
+                //                 url = x.Url
+                //             });
+
+                var blogs = db.Blogs.AsNoTracking().ToList();
 
                 foreach (var x in blogs)
                 {
                     yield return new BlogDto()
                     {
-                        BlogId = x.id,
-                        //Posts = x.posts.Select(y => new PostDto()
-                        //{
-                        //    PostId = y.PostId,
-                        //    Content = y.Content,
-                        //    BlogId = y.BlogId
-                        //})
-                        //.ToList(),
-                        Url = x.url
+                        BlogId = x.BlogId,
+                        Url = x.Url
                     };
                 }
             }
@@ -50,22 +45,29 @@ namespace EF_CoreExample_Adapter
                 {
                     BlogId = blog.BlogId,
                     Posts = new List<Post>(), 
-                    //blog.Posts.Select(x => new Post()
-                    //{
-                    //    BlogId = x.BlogId,
-                    //    Content = x.Content,
-                    //    PostId = x.PostId
-                    //})
-                    //.ToList(),
                     Url = blog.Url
                 });
 
                 db.SaveChanges();
             }
         }
+
+        public void Remove()
+        {
+            //var blogs = GetBlogs().ToList();
+            using (var db = new BloggingContext())
+            {
+                var blogs = db.Blogs.ToList();
+
+                foreach (var b in blogs)
+                {
+                    db.Remove(b);
+                }
+
+                db.SaveChanges();
+            }
+        }
     }
-
-
 
     public class BlogDto
     {

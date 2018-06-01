@@ -7,8 +7,8 @@
     <ProjectGuid>{904EAE5A-9EA0-448F-A6F9-4B4BA50DE716}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>App1</RootNamespace>
-    <AssemblyName>App1</AssemblyName>
+    <RootNamespace>EF_CoreExample.ClientApp</RootNamespace>
+    <AssemblyName>EF_CoreExample.ClientApp</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17134.0</TargetPlatformVersion>

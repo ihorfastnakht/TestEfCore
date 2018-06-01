@@ -8,17 +8,35 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel>
-            <TextBox Name="NewBlogUrl"></TextBox>
-            <Button Click="Button_Click">Add</Button>
-            <Button x:Name="reload" Content="Reload" Click="reload_Click"/>
-            <ListView Name="Blogs">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Url}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            
+            <Button x:Name="InitDb" Content="Initialize Db" Click="OnInitDbClick"
+                    Margin="10" 
+                    Width="150"/>
+            <Button x:Name="FetchDb" Content="Fetch From Db" Click="OnFetchDbClick"
+                    Margin="10"
+                    Width="150"/>
+            <TextBlock x:Name="CountLabel"
+                       Foreground="Green"
+                       FontWeight="Bold" 
+                       Margin="10"/>
+            <TextBlock x:Name="TimeLabel"
+                       Foreground="Blue"
+                       FontWeight="Bold"
+                       Margin="10"/>
         </StackPanel>
+        <ListView Name="List" Margin="10"
+                  Grid.Row="1"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Url}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

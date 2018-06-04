@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 
 using EF_CoreExample_Adapter;
@@ -30,7 +20,6 @@ namespace App1
         }
 
         readonly DataAdapter _dataAdapter = new DataAdapter();
-
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -68,7 +57,7 @@ namespace App1
 
             _dataAdapter.Remove();
 
-            for (int i = 0; i < 1500; i++)
+            for (int i = 0; i < 100000; i++)
             {
                 var blog = new BlogDto()
                 {

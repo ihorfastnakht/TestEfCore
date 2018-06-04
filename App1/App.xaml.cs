@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -37,13 +38,18 @@ namespace App1
         /// например, если приложение запускается для открытия конкретного файла.
         /// </summary>
         /// <param name="e">Сведения о запросе и обработке запуска.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
+            if (await ApplicationData.Current.LocalFolder.TryGetItemAsync("blogging.db") == null)
+            {
+                StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync("blogging.db");
+                await databaseFile.CopyAsync(ApplicationData.Current.LocalFolder);
+            }
+
 
             // Не повторяйте инициализацию приложения, если в окне уже имеется содержимое,
             // только обеспечьте активность окна
-            if (rootFrame == null)
+            if (!(Window.Current.Content is Frame rootFrame))
             {
                 // Создание фрейма, который станет контекстом навигации, и переход к первой странице
                 rootFrame = new Frame();

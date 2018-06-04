@@ -12,9 +12,10 @@ namespace EF_CoreExample_Adapter
         {
             using (var db = new BloggingContext())
             {
-                db.ChangeTracker.LazyLoadingEnabled = false;
-                db.ChangeTracker.QueryTrackingBehavior = Microsoft.EntityFrameworkCore.QueryTrackingBehavior.NoTracking;
                 db.ChangeTracker.AutoDetectChangesEnabled = false;
+                db.ChangeTracker.LazyLoadingEnabled = false;
+                db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                db.Database.AutoTransactionsEnabled = false;
 
                 //var blogs = (from x in db.Blogs
                 //             select new
@@ -41,6 +42,11 @@ namespace EF_CoreExample_Adapter
         {
             using (var db = new BloggingContext())
             {
+                db.ChangeTracker.AutoDetectChangesEnabled = false;
+                db.ChangeTracker.LazyLoadingEnabled = false;
+                db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                db.Database.AutoTransactionsEnabled = false;
+
                 db.Blogs.Add(new Blog()
                 {
                     BlogId = blog.BlogId,
@@ -57,6 +63,11 @@ namespace EF_CoreExample_Adapter
             //var blogs = GetBlogs().ToList();
             using (var db = new BloggingContext())
             {
+                db.ChangeTracker.AutoDetectChangesEnabled = false;
+                db.ChangeTracker.LazyLoadingEnabled = false;
+                db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                db.Database.AutoTransactionsEnabled = false;
+
                 var blogs = db.Blogs.ToList();
 
                 foreach (var b in blogs)

@@ -10,7 +10,7 @@ namespace EF_CoreExample.Shared
         {
             using (var db = new BloggingContext())
             {
-                db.Database.Migrate();
+                db.Database.EnsureCreated();
             }
         }
 
